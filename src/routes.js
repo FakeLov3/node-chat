@@ -16,6 +16,7 @@ router.post('/user/createUser', userController.Mutation.createUser);
 router.delete('/user/:id', userController.Mutation.deleteUser);
 
 // Room
+router.get('/rooms/', roomController.Query.rooms);
 router.post('/room/createRoom', roomController.Mutation.createRoom);
 router.post('/room/joinRoom', roomController.Mutation.joinRoom);
 

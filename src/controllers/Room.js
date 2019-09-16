@@ -1,7 +1,18 @@
 const Room = require('../models/Room');
 const User = require('../models/User');
 
-const Query = {};
+const Query = {
+    rooms: async(req, res, next) => {
+        try {
+            const rooms = await Room.find();
+            res.status(200).send(rooms);
+        } catch (error) {
+            res.status(500).send({
+                error: 'Internal server error.'
+            });
+        }
+    }
+};
 
 const Mutation = {
     createRoom: async(req, res, next) => {
