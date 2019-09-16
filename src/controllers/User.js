@@ -6,9 +6,8 @@ const Query = {
     user: async(req, res, next) => {
         try {
             const user = await User.findById(req.params.id);
-            user ? res.status(200).send(user) : res.status(500).send({
-                error: 'No user found.'
-            });
+            if(!user) return;
+            res.status(200).send(user);
         } catch (error) {
             res.status(500).send({
                 error: 'Internal server error.'
@@ -37,9 +36,8 @@ const Mutation = {
                 password: md5(req.body.password + process.env.SALT_KEY),
                 role: 'user',
             });
-            user ? res.status(200).send(user) : res.status(500).send({
-                error: 'Could not create user.'
-            });
+            if(!user) return;
+            res.status(200).send(user);
         } catch (error) {
             res.status(500).send({
                 error: 'Internal server error.'
@@ -50,9 +48,8 @@ const Mutation = {
 	deleteUser: async(req, res, next) => {
         try {
             const user = await User.findByIdAndRemove(req.params.id);
-            user ? res.status(200).send(user) : res.status(500).send({
-                error: 'Could not delete user.'
-            });
+            if(!user) return;
+            res.status(200).send(user);
         } catch (error) {
             res.status(500).send({
                 error: 'Internal server error.'
@@ -66,16 +63,16 @@ const Mutation = {
                 email: req.body.email,
                 password: md5(req.body.password + process.env.SALT_KEY)
             });
-            const token = user ? {
-                token: jwt.sign({
+            if(!user) return;
+            const token = jwt.sign(
+                {
                     id: user.id,
                     name: user.name,
                     role: user.role
-                }, process.env.JWT_SECRET, { expiresIn: '1d' })
-            } : null;
-            token ? res.status(200).send(token) : res.status(500).send({
-                error: 'No user found.'
-            });
+                },
+                process.env.JWT_SECRET, { expiresIn: '1d' }
+            );
+            res.status(200).send(token);
         } catch (error) {
             res.status(500).send({
                 error: 'Internal server error.'

@@ -7,17 +7,15 @@ const Mutation = {
     createRoom: async(req, res, next) => {
         try {
             const user = await User.findById(req.body.id);
-            if(!user) res.status(500).send({
-                error: 'No user found.'
-            });
+            if(!user) return;
+
             const room = await Room.create({
                 title: req.body.title,
                 users: [user],
                 messages: []
             });
-            if(!room) res.status(500).send({
-                error: 'Could not create room.'
-            });
+            if(!room) return;
+
             user.rooms.push(room.id);
             user.updateOne(user, (err, doc) => 
             err ? res.status(500).send({
@@ -30,14 +28,13 @@ const Mutation = {
             });
         }
     },
-    
+
     joinRoom: async(req, res, next) => {
         try {
             const user = await User.findById(req.body.id);
             const room = await Room.findById(req.body.room);
-            if(!room) res.status(500).send({
-                error: 'No room found.'
-            });
+            if(!room) return;
+
             user.rooms.push(room.id);
             user.updateOne(user, (err, doc) => 
             err ? res.status(500).send({
