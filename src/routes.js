@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const userController = require('./controllers/User');
+const userQuery = require('./controllers/User').Query;
 
 // User
 
@@ -10,10 +10,10 @@ router.get('/', (req, res, next) => {
         ok: true,
     });
 });
-router.get('/user/:id', userController.Query.user);
-router.get('/users/', userController.Query.users);
+router.get('/user/:id', userQuery.user);
+router.get('/users/', userQuery.users);
 // router.post('/user/auth', userController.Mutation.auth);
-router.post('/user/createUser', userController.Mutation.createUser);
+// router.post('/user/createUser', userController.Mutation.createUser);
 // router.delete('/user/deleteUser', userController.Mutation.deleteUser);
 
 // Messages

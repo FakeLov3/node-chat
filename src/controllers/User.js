@@ -3,8 +3,27 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const Query = {
-    user: (req, res, next) => User.findById(req.params.id),
-    users: () => User.find(),
+    user: async(req, res, next) => {
+        try {
+            const user = await User.findById(req.params.id);
+            user ? res.status(200).send(user) : res.status(500).send({
+                error: 'No user found.'
+            });
+        } catch (error) {
+            res.status(500).send({
+                error: 'Internal server error.'
+            });
+        }
+    },
+
+    users: async() => {
+        try {
+            const users = await User.find();
+            res.status
+        } catch (error) {
+            
+        }
+    },
 };
 
 const Mutation = {
