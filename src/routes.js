@@ -5,11 +5,16 @@ const userController = require('./controllers/User');
 
 // User
 
-router.get('/user/', userController.Query.user);
+router.get('/', (req, res, next) => {
+    res.json({
+        ok: true,
+    });
+});
+router.get('/user/:id', userController.Query.user);
 router.get('/users/', userController.Query.users);
-router.post('/user/auth', userController.Mutation.auth);
+// router.post('/user/auth', userController.Mutation.auth);
 router.post('/user/createUser', userController.Mutation.createUser);
-router.delete('/user/deleteUser', userController.Mutation.deleteUser);
+// router.delete('/user/deleteUser', userController.Mutation.deleteUser);
 
 // Messages
 
