@@ -81,7 +81,6 @@ const Mutation = {
                 error: 'Internal server error.'
             });
         }
-		
 	},
 };
 
