@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const app = express();
+const ws = express();
+const http = require('http').createServer(ws);
+const io = require('socket.io')(http);
 const routes = require('./routes');
 
 const port = process.env.PORT || 3001;
@@ -24,4 +27,9 @@ app.use(function (req, res, next) {
 });
 app.use('/', routes);
 
+io.on('connection', socket => {
+    socket.on('message', data => io.emit('message', data));
+});
+
 app.listen(port, () => console.log(`Server running on localhost:${port}`));
+http.listen(port + 1, () => console.log(`Socket running on localhost:${port + 1}`));

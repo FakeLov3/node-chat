@@ -33,8 +33,8 @@ const Mutation = {
                 error: 'Could not update messages.'
             }) : doc);
             res.status(200).send({
-                message: message,
-                sender: user
+                message: req.body.message,
+                sender: req.body.id
             });
         } catch (error) {
             res.status(500).send({
@@ -43,14 +43,6 @@ const Mutation = {
         }
     }
 };
-
-// const Subscription = {
-//     getMessage: {
-//         subscribe: (_, args, ctx, info) => {
-//             return ctx.pubsub.asyncIterator(CHAT_CHANNEL);
-//         }
-//     }
-// };
 
 module.exports = {
 	Query,
