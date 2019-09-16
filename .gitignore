@@ -1,0 +1,13 @@
+## General
+node_modules
+.vscode
+
+## Lock files
+yarn.lock
+package-lock.json
+
+## Log files
+yarn-error.log
+
+## Environment variables
+.env
